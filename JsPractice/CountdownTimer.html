@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f0f8ff;
+    }
+    h1 {
+      color: #333;
+    }
+    .timer-container {
+      margin: 20px;
+      font-size: 48px;
+      font-weight: bold;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer-container" id="counterDisplay">0</div>
+  <div class="buttons">
+    <button id="startButton">Start</button>
+    <button id="pauseButton">Pause</button>
+    <button id="stopButton">Stop</button>
+  </div>
+
+  <script>
+    let counter = 0;
+    let intervalId = null;
+
+    const counterDisplay = document.getElementById('counterDisplay');
+    const startButton = document.getElementById('startButton');
+    const pauseButton = document.getElementById('pauseButton');
+    const stopButton = document.getElementById('stopButton');
+
+    startButton.addEventListener('click', () => {
+      if (intervalId === null) { 
+        intervalId = setInterval(() => {
+          if (counter < 10) {
+            counter++;
+            counterDisplay.textContent = counter;
+          } else {
+            clearInterval(intervalId);
+            intervalId = null;
+            alert('Counter reached 10 and stopped.');
+          }
+        }, 1000);
+      }
+    });
+
+    pauseButton.addEventListener('click', () => {
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    });
+
+    stopButton.addEventListener('click', () => {
+      clearInterval(intervalId);
+      intervalId = null;
+      counter = 0;
+      counterDisplay.textContent = counter;
+    });
+  </script>
+</body>
+</html>

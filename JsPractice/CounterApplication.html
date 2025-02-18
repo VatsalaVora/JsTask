@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f0f8ff;
+    }
+    h1 {
+      color: #333;
+    }
+    .counter-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    p {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="counter-container">
+    <button id="decrementBtn">Decrement</button>
+    <p id="counter">0</p>
+    <button id="incrementBtn">Increment</button>
+  </div>
+
+  <script>
+    const counterValue = document.getElementById('counter');
+    const incrementBtn = document.getElementById('incrementBtn');
+    const decrementBtn = document.getElementById('decrementBtn');
+
+    let count = 0;
+
+    incrementBtn.addEventListener('click', () => {
+      if (count < 10) {
+        count++;
+        counterValue.textContent = count;
+      } else {
+        alert('Maximum value reached!');
+      }
+    });
+
+    decrementBtn.addEventListener('click', () => {
+      if (count > 0) {
+        count--;
+        counterValue.textContent = count;
+      } else {
+        alert('Minimum value reached!');
+      }
+    });
+  </script>
+</body>
+</html>

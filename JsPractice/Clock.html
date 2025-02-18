@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f3f4f6;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #0077b6;
+    }
+    .clock-container {
+      background-color: #e0f7fa;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .time {
+      font-size: 4rem;
+      font-weight: bold;
+      color: #333;
+    }
+    .date {
+      font-size: 1.5rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock-container">
+    <div id="currentTime" class="time"></div>
+    <div id="currentDate" class="date"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const timeString = `${hours}:${minutes}:${seconds}`;
+
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const year = now.getFullYear();
+      const dateString = `${day}-${month}-${year}`;
+
+      document.getElementById('currentTime').textContent = timeString;
+      document.getElementById('currentDate').textContent = dateString;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>

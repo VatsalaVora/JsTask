@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    .timer {
+      font-size: 3rem;
+      color: #0077b6;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #005f8f;
+    }
+  </style>
+</head>
+<body>
+  <div id="timerDisplay" class="timer">00:30</div>
+  <button id="startButton">Start Timer</button>
+
+  <script>
+    let countdown;
+    const timerDisplay = document.getElementById('timerDisplay');
+    const startButton = document.getElementById('startButton');
+
+    function startTimer(duration) {
+      let timeRemaining = duration;
+      timerDisplay.textContent = formatTime(timeRemaining);
+
+      countdown = setInterval(() => {
+        timeRemaining--;
+        timerDisplay.textContent = formatTime(timeRemaining);
+
+        if (timeRemaining <= 0) {
+          clearInterval(countdown);
+          startButton.textContent = "Resend OTP";
+          startButton.disabled = false;
+        }
+      }, 1000);
+    }
+
+    function formatTime(seconds) {
+      const minutes = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const remainingSeconds = String(seconds % 60).padStart(2, '0');
+      return `${minutes}:${remainingSeconds}`;
+    }
+
+    startButton.addEventListener('click', () => {
+      startButton.disabled = true;
+      startButton.textContent = "Running...";
+      startTimer(30); // Start timer from 30 seconds
+    });
+  </script>
+
+</body>
+</html>

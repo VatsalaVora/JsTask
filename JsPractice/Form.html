@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    select {
+      padding: 8px;
+      width: 300px;
+      margin-top: 5px;
+    }
+
+    .gender, .hobby {
+      margin-top: 5px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Form Validation and Data Display</h1>
+
+  <form id="userForm">
+    <label>Enter Name:
+      <input type="text" id="name" placeholder="Enter your name">
+    </label>
+
+    <label>Enter Mobile No:
+      <input type="text" id="mobile" placeholder="Enter your mobile number">
+    </label>
+
+    <label>Gender:
+      <span class="gender">
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+      </span>
+    </label>
+
+    <label>Hobby:
+      <span class="hobby">
+        <input type="checkbox" value="Reading"> Reading
+        <input type="checkbox" value="Dancing"> Dancing
+        <input type="checkbox" value="Singing"> Singing
+      </span>
+    </label>
+
+    <label>City:
+      <select id="city">
+        <option value="">---Select City---</option>
+        <option value="Ahmedabad">Ahmedabad</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Bangalore">Bangalore</option>
+      </select>
+    </label>
+
+    <button type="button" onclick="handleSubmit()">Submit Data</button>
+  </form>
+
+  <div id="result" class="result"></div>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Mobile</th>
+        <th>Gender</th>
+        <th>Hobbies</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    function handleSubmit() {
+      const name = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const gender = document.querySelector('input[name="gender"]:checked');
+      const hobbies = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                          .map(checkbox => checkbox.value);
+      const city = document.getElementById('city').value;
+
+      if (name === '' || mobile === '' || !gender || hobbies.length === 0 || city === '') {
+        alert('Please fill out all fields!');
+        return;
+      }
+
+      if (!/^[0-9]{10}$/.test(mobile)) {
+        alert('Please enter a valid 10-digit mobile number.');
+        return;
+      }
+
+      const tableBody = document.querySelector("#dataTable tbody");
+      const newRow = document.createElement("tr");
+
+      newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${mobile}</td>
+        <td>${gender.value}</td>
+        <td>${hobbies.join(', ')}</td>
+        <td>${city}</td>
+      `;
+
+      tableBody.appendChild(newRow);
+
+      document.getElementById('userForm').reset();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #f3f4f6;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #result {
+      width: 230px;
+      height: 40px;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      text-align: right;
+      padding-right: 10px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+    }
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(4, 50px);
+      gap: 10px;
+    }
+    button {
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #005f8f;
+    }
+    button:active {
+      background-color: #023e73;
+    }
+    button.clear {
+      grid-column: span 4;
+      background-color: #d90429;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="result" readonly>
+
+  <div class="calculator">
+    <button onclick="appendValue('1')">1</button>
+    <button onclick="appendValue('2')">2</button>
+    <button onclick="appendValue('3')">3</button>
+    <button onclick="appendValue('+')">+</button>
+    
+    <button onclick="appendValue('4')">4</button>
+    <button onclick="appendValue('5')">5</button>
+    <button onclick="appendValue('6')">6</button>
+    <button onclick="appendValue('-')">-</button>
+    
+    <button onclick="appendValue('7')">7</button>
+    <button onclick="appendValue('8')">8</button>
+    <button onclick="appendValue('9')">9</button>
+    <button onclick="appendValue('*')">*</button>
+    
+    <button onclick="appendValue('.')">.</button>
+    <button onclick="appendValue('0')">0</button>
+    <button onclick="calculateResult()">=</button>
+    <button onclick="appendValue('/')">/</button>
+    <button class="clear" onclick="clearResult()">C</button>
+  </div>
+
+  <script>
+    const resultInput = document.getElementById('result');
+
+    function appendValue(value) {
+      resultInput.value += value;
+    }
+
+    function clearResult() {
+      resultInput.value = '';
+    }
+
+    function calculateResult() {
+      try {
+        resultInput.value = eval(resultInput.value);
+      } catch {
+        alert('Invalid Expression');
+        clearResult();
+      }
+    }
+  </script>
+</body>
+</html>

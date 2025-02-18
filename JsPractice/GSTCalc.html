@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 50px;
+      text-align: center;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 1rem;
+    }
+
+    #result {
+      margin-top: 20px;
+    }
+
+    .result-line {
+      font-size: 1.2rem;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>GST Calculator</h1>
+  <label for="amount">Enter Amount (in INR):</label>
+  <input type="number" id="amount" placeholder="Enter amount" required>
+  <br>
+
+  <label for="gstRate">Select GST Rate:</label>
+  <select id="gstRate">
+    <option value="5">5%</option>
+    <option value="12">12%</option>
+    <option value="18" selected>18%</option>
+    <option value="28">28%</option>
+  </select>
+  <br>
+
+  <button onclick="calculateGST()">Calculate GST</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateGST() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const gstRate = parseFloat(document.getElementById('gstRate').value);
+
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+      }
+
+      const gstAmount = (amount * gstRate) / 100;
+      const totalAmount = amount + gstAmount;
+
+      document.getElementById('result').innerHTML = `
+        <div class="result-line">Amount: ₹ ${amount.toFixed(2)}</div>
+        <div class="result-line">GST (${gstRate}%): ₹ ${gstAmount.toFixed(2)}</div>
+        <div class="result-line">Total: ₹ ${totalAmount.toFixed(2)}</div>
+      `;
+    }
+  </script>
+
+</body>
+</html>

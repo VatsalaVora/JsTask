@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .game-container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 12px 15px;
+            width: 100%;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        .score {
+            font-size: 1.1em;
+            color: #4b5563;
+            margin-top: 20px;
+        }
+
+        .timer {
+            font-size: 1.5em;
+            color: #ef4444;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        .positive-score {
+            color: #10b981;
+        }
+
+        .negative-score {
+            color: #f43f5e;
+        }
+
+        .total-score {
+            color: #1d4ed8;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>Guess the Number Game 🎮</h1>
+        <p>Guess a number between 1 and 10</p>
+
+        <input type="number" id="guess" min="1" max="10" placeholder="Enter your guess" />
+        <button onclick="makeGuess()">Guess</button>
+
+        <div class="score">
+            Positive Score: <span id="positiveScore" class="positive-score">0</span><br>
+            Negative Score: <span id="negativeScore" class="negative-score">0</span><br>
+            Total Score: <span id="totalScore" class="total-score">0</span>
+        </div>
+
+        <div class="timer">Time Left: <span id="timeLeft">60</span> seconds</div>
+
+        <div class="result" id="resultMessage"></div>
+    </div>
+
+    <script>
+        let randomNumber = generateRandomNumber();
+        console.log(randomNumber);
+        let positiveScore = 0;
+        let negativeScore = 0;
+        let totalScore = 0;
+        let timeLeft = 60;
+
+        function generateRandomNumber() {
+            return Math.floor(Math.random() * 10) + 1;
+        }
+
+        function makeGuess() {
+            const userGuess = parseInt(document.getElementById("guess").value);
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 10) {
+                alert("Please enter a number between 1 and 10");
+                return;
+            }
+
+            if (userGuess === randomNumber) {
+                positiveScore += 10;
+                randomNumber = generateRandomNumber(); // Change number on correct guess
+                document.getElementById("resultMessage").textContent = "Correct Guess! 🎉";
+                document.getElementById("resultMessage").style.color = "#10b981";
+                console.log(randomNumber);
+
+            } else {
+                negativeScore += 5;
+                document.getElementById("resultMessage").textContent = "Wrong Guess! Try Again. 😢";
+                document.getElementById("resultMessage").style.color = "#f43f5e";
+            }
+
+            updateScores();
+        }
+
+        function updateScores() {
+            totalScore = positiveScore - negativeScore;
+            document.getElementById("positiveScore").textContent = positiveScore;
+            document.getElementById("negativeScore").textContent = negativeScore;
+            document.getElementById("totalScore").textContent = totalScore;
+        }
+
+        function startTimer() {
+            const timerInterval = setInterval(function () {
+                timeLeft--;
+                document.getElementById("timeLeft").textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("resultMessage").textContent = "Time's Up! Game Over ⏰";
+                    document.getElementById("guess").disabled = true;
+                }
+            }, 1000);
+        }
+
+        // Start the game timer
+        startTimer();
+    </script>
+</body>
+
+</html>
